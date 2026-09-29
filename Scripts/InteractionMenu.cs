@@ -1,72 +1,89 @@
+using System;
+using System.Collections.Generic;
 using Godot;
 
 public partial class InteractionMenu : Container
 {
-	[Export]
-	public ItemList List { get; set; }
+    [Export]
+    public ItemList List { get; set; }
 
-	private Node _requester;
+    private Action<int> _onSelected;
 
-	public override void _Ready()
-	{
-		Hide();
-		if (EventBus.Instance != null)
-		{
-			EventBus.Instance.InteractionPrompt += OnInteractionPrompt;
-		}
+    public override void _Ready()
+    {
+        Hide();
 
-		if (List != null)
-		{
-			List.ItemActivated += OnOptionSelected;
-		}
-	}
+        if (List != null)
+        {
+            List.ItemActivated += OnOptionSelected;
+        }
+    }
 
-	public override void _ExitTree()
-	{
-		if (EventBus.Instance != null)
-		{
-			EventBus.Instance.InteractionPrompt -= OnInteractionPrompt;
-		}
+    public override void _ExitTree()
+    {
+        if (List != null)
+        {
+            List.ItemActivated -= OnOptionSelected;
+        }
 
-		if (List != null)
-		{
-			List.ItemActivated -= OnOptionSelected;
-		}
-	}
+        _onSelected = null;
+    }
 
-	private void OnInteractionPrompt(string[] options, Node requester)
-	{
-		List.Clear();
+    public void ShowOptions(IReadOnlyList<string> options, Action<int> onSelected)
+    {
+        if (List == null)
+        {
+            GD.PushError("InteractionMenu has no ItemList assigned.");
+            return;
+        }
 
-		if (options == null || options.Length == 0)
-		{
-			_requester = null;
-			Hide();
-			return;
-		}
+        List.Clear();
 
-		_requester = requester;
+        if (options == null || options.Count == 0)
+        {
+            HideMenu();
+            return;
+        }
 
-		foreach (string option in options)
-		{
-			List.AddItem(option);
-		}
+        _onSelected = onSelected;
 
-		Show();
-		List.GrabFocus();
+        foreach (string option in options)
+        {
+            List.AddItem(option);
+        }
 
-		if (List.ItemCount > 0)
-			List.Select(0);
-	}
+        Show();
 
-	private void OnOptionSelected(long index)
-	{
-		List.ReleaseFocus();
-		Hide();
-		EventBus.Instance.EmitSignal(
-			EventBus.SignalName.InteractionPromptOptionSelected,
-			(int)index,
-			_requester
-		);
-	}
+        List.GrabFocus();
+        List.Select(0);
+    }
+
+    public void HideMenu()
+    {
+        _onSelected = null;
+
+        if (List != null)
+        {
+            List.ReleaseFocus();
+            List.Clear();
+        }
+
+        Hide();
+    }
+
+    private void OnOptionSelected(long index)
+    {
+        Action<int> callback = _onSelected;
+
+        _onSelected = null;
+
+        Hide();
+
+        if (List != null)
+        {
+            List.ReleaseFocus();
+        }
+
+        callback?.Invoke((int)index);
+    }
 }

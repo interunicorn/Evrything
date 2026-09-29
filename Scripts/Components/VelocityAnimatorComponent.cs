@@ -22,6 +22,7 @@ public partial class VelocityAnimatorComponent : AnimatedSprite2D
             return;
 
         Vector2 velocity = Character.Velocity;
+
         bool isMoving = velocity.LengthSquared() > SpeedThreshold * SpeedThreshold;
 
         if (isMoving)
@@ -30,14 +31,15 @@ public partial class VelocityAnimatorComponent : AnimatedSprite2D
         }
 
         string state = isMoving ? "Walk" : "Idle";
-        string dirString = DirectionToString(_lastDirection);
-        string newAnimation = $"{state} {dirString}";
+        string direction = DirectionToString(_lastDirection);
 
-        if (_currentAnimation != newAnimation)
-        {
-            _currentAnimation = newAnimation;
-            Play(_currentAnimation);
-        }
+        string newAnimation = $"{state} {direction}";
+
+        if (_currentAnimation == newAnimation)
+            return;
+
+        _currentAnimation = newAnimation;
+        Play(_currentAnimation);
     }
 
     private Vector2 GetCardinalDirection(Vector2 velocity)
@@ -46,6 +48,7 @@ public partial class VelocityAnimatorComponent : AnimatedSprite2D
         {
             return velocity.X > 0 ? Vector2.Right : Vector2.Left;
         }
+
         return velocity.Y > 0 ? Vector2.Down : Vector2.Up;
     }
 
@@ -53,10 +56,13 @@ public partial class VelocityAnimatorComponent : AnimatedSprite2D
     {
         if (direction == Vector2.Left)
             return "Left";
+
         if (direction == Vector2.Right)
             return "Right";
+
         if (direction == Vector2.Up)
             return "Up";
+
         return "Down";
     }
 }

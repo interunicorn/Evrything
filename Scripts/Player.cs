@@ -6,24 +6,34 @@ public partial class Player : CharacterBody2D
     public float Speed { get; set; } = 200.0f;
 
     [Export]
-    public InteractionComponent Interaction { get; set; }
+    public InteractionController Interaction { get; set; }
 
     public override void _Ready()
     {
-        Interaction ??= GetNodeOrNull<InteractionComponent>("InteractionComponent");
+        Interaction ??= GetNodeOrNull<InteractionController>("Interaction");
+
+        if (Interaction != null)
+        {
+            Interaction.SetInteractor(this);
+        }
+        else
+        {
+            GD.PushError("Player could not find InteractionController at 'Interaction'.");
+        }
     }
 
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event.IsActionPressed("interact"))
         {
-            Interaction?.TryInteract(this);
+            Interaction?.TryInteract();
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
         Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
+
         Velocity = inputDirection * Speed;
 
         if (inputDirection != Vector2.Zero)

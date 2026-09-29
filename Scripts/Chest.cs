@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Godot;
 
 public partial class Chest : StaticBody2D, IInteractable
@@ -8,50 +9,56 @@ public partial class Chest : StaticBody2D, IInteractable
     [Export]
     public AnimatedSprite2D Sprite { get; set; }
 
-    public string[] Options { get; set; }
-
     private bool _isOpened = false;
 
-    public override void _Ready()
+    public bool CanInteract(Node interactor)
     {
-        if (EventBus.Instance != null)
-        {
-            EventBus.Instance.InteractionPromptOptionSelected += OnOptionSelected;
-        }
+        return IsEnabled;
     }
 
-    public bool CanInteract(Node interactor) => IsEnabled;
+    public IReadOnlyList<string> GetInteractionOptions(Node interactor)
+    {
+        if (_isOpened)
+        {
+            return new[] { "Close" };
+        }
 
-    public void Interact(Node interactor)
+        return new[] { "Open" };
+    }
+
+    public void Interact(Node interactor, int optionIndex)
     {
         if (!CanInteract(interactor))
             return;
 
-        if (_isOpened)
+        if (Sprite == null)
         {
-            Options = ["Close"];
-            EventBus.Instance.EmitSignal(EventBus.SignalName.InteractionPrompt, Options, this);
+            GD.PushError("Chest has no AnimatedSprite2D assigned.");
+            return;
         }
-        else
+
+        if (optionIndex == 0)
         {
-            Options = ["Open"];
-            EventBus.Instance.EmitSignal(EventBus.SignalName.InteractionPrompt, Options, this);
+            if (_isOpened)
+            {
+                Close();
+            }
+            else
+            {
+                Open();
+            }
         }
     }
 
-    public void OnOptionSelected(int index, Node requester)
+    private void Open()
     {
-        string option = Options[index];
+        Sprite.Play("Open");
+        _isOpened = true;
+    }
 
-        if (option == "Open")
-        {
-            Sprite.Play("Open");
-            _isOpened = true;
-        }
-        else if (option == "Close")
-        {
-            Sprite.Play("Close");
-            _isOpened = false;
-        }
+    private void Close()
+    {
+        Sprite.Play("Close");
+        _isOpened = false;
     }
 }
