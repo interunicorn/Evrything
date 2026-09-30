@@ -4,5 +4,5 @@ using Godot;
 public partial class BodyPartData : Resource
 {
     [Export]
-    public string Name { get; set; }
+    public float MaxHealth { get; set; }
 }

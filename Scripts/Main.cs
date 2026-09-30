@@ -3,7 +3,7 @@ using Godot;
 public partial class Main : Control
 {
     [Export]
-    public Player Player { get; set; }
+    public Character Player { get; set; }
 
     [Export]
     public UI UI { get; set; }

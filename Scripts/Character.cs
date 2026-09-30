@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class Player : CharacterBody2D
+public partial class Character : CharacterBody2D
 {
     [Export]
     public InteractionController Interaction { get; set; }
@@ -8,8 +8,12 @@ public partial class Player : CharacterBody2D
     [Export]
     public CharacterData Data { get; set; }
 
+    public CharacterState State { get; private set; }
+
     public override void _Ready()
     {
+        State = new CharacterState { Health = Data.MaxHealth, Hygiene = Data.MaxHygiene };
+
         Interaction ??= GetNodeOrNull<InteractionController>("Interaction");
 
         if (Interaction != null)
@@ -24,17 +28,26 @@ public partial class Player : CharacterBody2D
 
     public override void _UnhandledInput(InputEvent @event)
     {
-        if (@event.IsActionPressed("interact"))
+        if (@event.IsActionPressed("Interact"))
         {
             Interaction?.TryInteract();
+        }
+
+        if (@event.IsActionPressed("CtrlModifier"))
+        {
+            State.SpeedModifier = 0.5f;
+        }
+        else if (@event.IsActionReleased("CtrlModifier"))
+        {
+            State.SpeedModifier = 1.0f;
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
+        Vector2 inputDirection = Input.GetVector("Left", "Right", "Up", "Down");
 
-        Velocity = inputDirection * Data.Speed;
+        Velocity = inputDirection * GetSpeed();
 
         if (inputDirection != Vector2.Zero)
         {
@@ -42,5 +55,10 @@ public partial class Player : CharacterBody2D
         }
 
         MoveAndSlide();
+    }
+
+    public float GetSpeed()
+    {
+        return Data.BaseSpeed * State.SpeedModifier;
     }
 }
