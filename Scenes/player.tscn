@@ -2,9 +2,17 @@
 
 [ext_resource type="Script" uid="uid://dijurgy4w50pj" path="res://Scripts/Player.cs" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://dhel7wx5if6on" path="res://Assets/The Fantasy Tileset - Animated Character/Main Character/Character_Idle.png" id="2_6t5aa"]
+[ext_resource type="Script" uid="uid://cfalp4ay0cki0" path="res://Data/CharacterData.cs" id="2_x3wgy"]
 [ext_resource type="Texture2D" uid="uid://dxeu5jj7ttmeo" path="res://Assets/The Fantasy Tileset - Animated Character/Main Character/Character_Walk.png" id="3_vgqql"]
 [ext_resource type="Script" uid="uid://d2s1771svgew7" path="res://Scripts/Components/VelocityAnimatorComponent.cs" id="4_vgqql"]
-[ext_resource type="Script" uid="uid://dxj8hhrb3ssth" path="res://Scripts/Components/InteractionController.cs" id="5_fkybt"]
+[ext_resource type="Script" uid="uid://cmgwdq7hqr4fi" path="res://Scripts/Components/InteractionController.cs" id="5_fkybt"]
+
+[sub_resource type="Resource" id="Resource_fkybt"]
+script = ExtResource("2_x3wgy")
+Name = "Jeffry"
+Speed = 200.0
+BodyParts = null
+metadata/_custom_type_script = "uid://cfalp4ay0cki0"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgqql"]
 size = Vector2(10, 7)
@@ -277,26 +285,31 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1662793148 node_paths=PackedStringArray("Interaction")]
+collision_mask = 27
 script = ExtResource("1_v0iea")
 Interaction = NodePath("Interaction")
+Data = SubResource("Resource_fkybt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=629051644]
-position = Vector2(-1, 11.5)
+position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_vgqql")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=466304007 node_paths=PackedStringArray("Character")]
+position = Vector2(1, -17)
 sprite_frames = SubResource("SpriteFrames_11gg7")
 animation = &"Idle Down"
 script = ExtResource("4_vgqql")
 Character = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1232153927]
-position = Vector2(-1, -5)
+position = Vector2(0, -5)
 zoom = Vector2(5, 5)
 position_smoothing_speed = 10.0
 
 [node name="Interaction" type="RayCast2D" parent="." unique_id=1815465696]
-position = Vector2(-1, 12)
+position = Vector2(0, -5)
 target_position = Vector2(0, 32)
+collision_mask = 16
+hit_from_inside = true
 collide_with_areas = true
 script = ExtResource("5_fkybt")

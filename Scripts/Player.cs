@@ -3,10 +3,10 @@ using Godot;
 public partial class Player : CharacterBody2D
 {
     [Export]
-    public float Speed { get; set; } = 200.0f;
+    public InteractionController Interaction { get; set; }
 
     [Export]
-    public InteractionController Interaction { get; set; }
+    public CharacterData Data { get; set; }
 
     public override void _Ready()
     {
@@ -34,7 +34,7 @@ public partial class Player : CharacterBody2D
     {
         Vector2 inputDirection = Input.GetVector("left", "right", "up", "down");
 
-        Velocity = inputDirection * Speed;
+        Velocity = inputDirection * Data.Speed;
 
         if (inputDirection != Vector2.Zero)
         {

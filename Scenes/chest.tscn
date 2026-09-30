@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c0goeigapfxqd" path="res://Scripts/Chest.cs" id="1_lyb87"]
 [ext_resource type="Texture2D" uid="uid://decywredh0e30" path="res://Assets/Epic RPG World - Village(interiors) V1.3/assets/animations/chests-chest1-closing.png" id="2_cjfl1"]
 [ext_resource type="Texture2D" uid="uid://clnvqb77bdvkx" path="res://Assets/Epic RPG World - Village(interiors) V1.3/assets/animations/chests-chest1-opening.png" id="3_bagqn"]
+[ext_resource type="PackedScene" uid="uid://be3ktb76ff71j" path="res://Scenes/interaction_area.tscn" id="4_pmguq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bagqn"]
 size = Vector2(32, 10.5)
@@ -132,18 +133,27 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmguq"]
+size = Vector2(34, 24)
+
 [node name="Chest" type="StaticBody2D" unique_id=706622552 node_paths=PackedStringArray("Sprite")]
+collision_layer = 8
 script = ExtResource("1_lyb87")
 Sprite = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=487948791]
-position = Vector2(0, 14)
+position = Vector2(0, -5)
 shape = SubResource("RectangleShape2D_bagqn")
 
-[node name="Interactable" type="Area2D" parent="." unique_id=91815837]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable" unique_id=215116315]
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1362127313]
+position = Vector2(0, -20.5)
 sprite_frames = SubResource("SpriteFrames_lyb87")
 animation = &"Open"
+
+[node name="InteractionArea" parent="." unique_id=1808990596 instance=ExtResource("4_pmguq")]
+
+[node name="CollisionShape2D" parent="InteractionArea" index="0" unique_id=45777686]
+position = Vector2(0, -12)
+shape = SubResource("RectangleShape2D_pmguq")
+
+[editable path="InteractionArea"]

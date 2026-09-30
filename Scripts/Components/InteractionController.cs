@@ -39,7 +39,10 @@ public partial class InteractionController : RayCast2D
 
         ForceRaycastUpdate();
 
-        if (GetCollider() is not IInteractable interactable)
+        Node collider = GetCollider() as Node;
+        Node parent = collider?.GetParent();
+
+        if (parent is not IInteractable interactable)
             return;
 
         if (!interactable.IsEnabled)
