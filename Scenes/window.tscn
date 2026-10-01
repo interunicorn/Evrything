@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://bgas1ucyupqww"]
+
+[ext_resource type="Script" uid="uid://b0bu0bn8ggxn1" path="res://Scripts/Window.cs" id="1_0slyu"]
+[ext_resource type="Texture2D" uid="uid://bvbgun2iskqgi" path="res://Assets/Epic RPG World - Village(interiors) V1.3/assets/windows_and_doors_sprites/no_sunlight/windows1-_11.png" id="1_efths"]
+[ext_resource type="PackedScene" uid="uid://cur808hwrh6v2" path="res://Scenes/mask_sprite.tscn" id="2_30sqi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xhjo"]
+atlas = ExtResource("1_efths")
+region = Rect2(54, 0, 54, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_30sqi"]
+atlas = ExtResource("1_efths")
+region = Rect2(0, 0, 54, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ifbo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0xhjo")
+}],
+"loop": 1,
+"name": &"Close",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_30sqi")
+}],
+"loop": 1,
+"name": &"Open",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_osyg2"]
+size = Vector2(52, 6)
+
+[node name="Window" type="Area2D" unique_id=1041167801 node_paths=PackedStringArray("Sprite", "RayCast", "AreaCollision")]
+collision_layer = 16
+script = ExtResource("1_0slyu")
+Sprite = NodePath("AnimatedSprite2D")
+RayCast = NodePath("FloorCheck")
+AreaCollision = NodePath("CollisionShape2D")
+PaddingDown = 4.0
+
+[node name="MaskSprite" parent="." unique_id=1442211752 instance=ExtResource("2_30sqi")]
+position = Vector2(0, -20)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1811903095]
+position = Vector2(0, -20)
+sprite_frames = SubResource("SpriteFrames_8ifbo")
+animation = &"Open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=694059167]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_osyg2")
+
+[node name="FloorCheck" type="RayCast2D" parent="." unique_id=839033398]
+collision_mask = 4
+collide_with_areas = true

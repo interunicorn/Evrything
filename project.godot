@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="C# Test"
+config/name="Evrything C#"
 run/main_scene="uid://dfbx0pnrjjod2"
 config/features=PackedStringArray("4.7", "C#", "Mobile")
 config/icon="res://Assets/icon.svg"
@@ -76,6 +76,7 @@ CtrlModifier={
 2d_physics/layer_3="Ground"
 2d_physics/layer_4="Solid Object"
 2d_physics/layer_5="Interactable"
+2d_physics/layer_6="Walls"
 
 [physics]
 

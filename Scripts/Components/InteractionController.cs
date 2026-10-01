@@ -39,10 +39,12 @@ public partial class InteractionController : RayCast2D
 
         ForceRaycastUpdate();
 
-        Node collider = GetCollider() as Node;
-        Node parent = collider?.GetParent();
+        if (GetCollider() is not Node collider)
+            return;
 
-        if (parent is not IInteractable interactable)
+        IInteractable? interactable = FindInteractable(collider);
+
+        if (interactable == null)
             return;
 
         if (!interactable.IsEnabled)
@@ -65,6 +67,19 @@ public partial class InteractionController : RayCast2D
         }
 
         Menu.ShowOptions(options, ExecuteInteraction);
+    }
+
+    private IInteractable? FindInteractable(Node node)
+    {
+        while (node != null)
+        {
+            if (node is IInteractable interactable)
+                return interactable;
+
+            node = node.GetParent();
+        }
+
+        return null;
     }
 
     private void ExecuteInteraction(int optionIndex)

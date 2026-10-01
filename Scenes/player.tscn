@@ -10,7 +10,6 @@
 [sub_resource type="Resource" id="Resource_fkybt"]
 script = ExtResource("2_x3wgy")
 Name = "Jeffry"
-Speed = 200.0
 BodyParts = null
 metadata/_custom_type_script = "uid://cfalp4ay0cki0"
 
@@ -285,7 +284,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1662793148 node_paths=PackedStringArray("Interaction")]
-collision_mask = 27
+collision_mask = 59
 script = ExtResource("1_v0iea")
 Interaction = NodePath("Interaction")
 Data = SubResource("Resource_fkybt")
@@ -303,7 +302,7 @@ Character = NodePath("..")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1232153927]
 position = Vector2(0, -5)
-zoom = Vector2(5, 5)
+zoom = Vector2(2, 2)
 position_smoothing_speed = 10.0
 
 [node name="Interaction" type="RayCast2D" parent="." unique_id=1815465696]

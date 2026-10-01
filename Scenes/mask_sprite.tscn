@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cur808hwrh6v2"]
+
+[ext_resource type="Shader" uid="uid://da2te20fvsr1l" path="res://Shaders/wall_cutout.gdshader" id="1_nn3ys"]
+[ext_resource type="Texture2D" uid="uid://bg4y80w6avlur" path="res://Assets/White.png" id="2_vcg6p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0slyu"]
+shader = ExtResource("1_nn3ys")
+
+[node name="MaskSprite" type="Sprite2D" unique_id=1442211752]
+material = SubResource("ShaderMaterial_0slyu")
+scale = Vector2(46, 28)
+texture = ExtResource("2_vcg6p")
