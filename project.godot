@@ -18,6 +18,7 @@ config/icon="res://Assets/icon.svg"
 [autoload]
 
 EventBus="*uid://ont3umkfdcs5"
+Simulation="*uid://d162ox37kk4d"
 
 [display]
 

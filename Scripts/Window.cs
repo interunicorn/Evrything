@@ -1,12 +1,9 @@
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Godot;
 
-public partial class Window : Area2D, IInteractable
+public partial class Window : Area2D, IInteractableHandler
 {
-    [Export]
-    public bool IsEnabled { get; set; } = true;
-
     [Export]
     public AnimatedSprite2D Sprite { get; set; }
 
@@ -27,43 +24,26 @@ public partial class Window : Area2D, IInteractable
         SnapToFloor();
     }
 
-    public bool CanInteract(Node interactor)
-    {
-        return IsEnabled;
-    }
-
     public IReadOnlyList<string> GetInteractionOptions(Node interactor)
     {
-        if (_isOpened)
-        {
-            return new[] { "Close" };
-        }
-
-        return new[] { "Open" };
+        return _isOpened ? new[] { "Close" } : new[] { "Open" };
     }
 
     public void Interact(Node interactor, int optionIndex)
     {
-        if (!CanInteract(interactor))
-            return;
-
         if (Sprite == null)
         {
             GD.PushError("Window has no AnimatedSprite2D assigned.");
             return;
         }
 
-        if (optionIndex == 0)
-        {
-            if (_isOpened)
-            {
-                Close();
-            }
-            else
-            {
-                Open();
-            }
-        }
+        if (optionIndex != 0)
+            return;
+
+        if (_isOpened)
+            Close();
+        else
+            Open();
     }
 
     private void Open()
@@ -87,10 +67,13 @@ public partial class Window : Area2D, IInteractable
         }
 
         RayCast.ForceRaycastUpdate();
+
         if (RayCast.IsColliding())
         {
             float floorY = ToLocal(RayCast.GetCollisionPoint()).Y;
+
             AreaCollision.Position = new Vector2(AreaCollision.Position.X, floorY + PaddingDown);
+
             RayCast.Enabled = false;
         }
     }

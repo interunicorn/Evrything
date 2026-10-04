@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cur808hwrh6v2" path="res://Scenes/mask_sprite.tscn" id="2_a43ba"]
 [ext_resource type="Texture2D" uid="uid://b7myrenpf0sit" path="res://Assets/Epic RPG World - Village(interiors) V1.3/assets/animations/doors-d1-opening-h.png" id="2_fahql"]
 [ext_resource type="PackedScene" uid="uid://be3ktb76ff71j" path="res://Scenes/interaction_area.tscn" id="4_ab4ky"]
+[ext_resource type="Script" uid="uid://b02qesmgbm4bg" path="res://Scripts/Components/InteractableComponent.cs" id="6_burcv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0slyu"]
 atlas = ExtResource("1_p0e35")
@@ -172,7 +173,7 @@ Sprite = NodePath("AnimatedSprite2D")
 Collision = NodePath("CollisionShape2D")
 
 [node name="MaskSprite" parent="." unique_id=1442211752 instance=ExtResource("2_a43ba")]
-position = Vector2(0, -66)
+position = Vector2(26, -33)
 scale = Vector2(52, 66)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1900215495]
@@ -189,5 +190,8 @@ shape = SubResource("RectangleShape2D_fahql")
 [node name="CollisionShape2D" parent="InteractionArea" index="0" unique_id=45777686]
 position = Vector2(26, -2)
 shape = SubResource("RectangleShape2D_fkybt")
+
+[node name="InteractableComponent" type="Node2D" parent="." unique_id=633413666]
+script = ExtResource("6_burcv")
 
 [editable path="InteractionArea"]

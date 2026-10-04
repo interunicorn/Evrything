@@ -1,17 +1,10 @@
 [gd_scene format=3 uid="uid://cgwat88k053mo"]
 
-[ext_resource type="Script" uid="uid://dijurgy4w50pj" path="res://Scripts/Character.cs" id="1_v0iea"]
+[ext_resource type="Script" uid="uid://b1ebkxngqbif4" path="res://Scripts/Player.cs" id="1_fkybt"]
 [ext_resource type="Texture2D" uid="uid://dhel7wx5if6on" path="res://Assets/The Fantasy Tileset - Animated Character/Main Character/Character_Idle.png" id="2_6t5aa"]
-[ext_resource type="Script" uid="uid://cfalp4ay0cki0" path="res://Data/Characters/CharacterData.cs" id="2_x3wgy"]
 [ext_resource type="Texture2D" uid="uid://dxeu5jj7ttmeo" path="res://Assets/The Fantasy Tileset - Animated Character/Main Character/Character_Walk.png" id="3_vgqql"]
 [ext_resource type="Script" uid="uid://d2s1771svgew7" path="res://Scripts/Components/VelocityAnimatorComponent.cs" id="4_vgqql"]
 [ext_resource type="Script" uid="uid://cmgwdq7hqr4fi" path="res://Scripts/Components/InteractionController.cs" id="5_fkybt"]
-
-[sub_resource type="Resource" id="Resource_fkybt"]
-script = ExtResource("2_x3wgy")
-Name = "Jeffry"
-BodyParts = null
-metadata/_custom_type_script = "uid://cfalp4ay0cki0"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vgqql"]
 size = Vector2(10, 7)
@@ -283,11 +276,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=1662793148 node_paths=PackedStringArray("Interaction")]
+[node name="Player" type="CharacterBody2D" unique_id=1662793148]
 collision_mask = 59
-script = ExtResource("1_v0iea")
-Interaction = NodePath("Interaction")
-Data = SubResource("Resource_fkybt")
+script = ExtResource("1_fkybt")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=629051644]
 position = Vector2(0, -5.5)

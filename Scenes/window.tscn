@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b0bu0bn8ggxn1" path="res://Scripts/Window.cs" id="1_0slyu"]
 [ext_resource type="Texture2D" uid="uid://bvbgun2iskqgi" path="res://Assets/Epic RPG World - Village(interiors) V1.3/assets/windows_and_doors_sprites/no_sunlight/windows1-_11.png" id="1_efths"]
 [ext_resource type="PackedScene" uid="uid://cur808hwrh6v2" path="res://Scenes/mask_sprite.tscn" id="2_30sqi"]
+[ext_resource type="Script" uid="uid://b02qesmgbm4bg" path="res://Scripts/Components/InteractableComponent.cs" id="4_0slyu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0xhjo"]
 atlas = ExtResource("1_efths")
@@ -57,3 +58,6 @@ shape = SubResource("RectangleShape2D_osyg2")
 [node name="FloorCheck" type="RayCast2D" parent="." unique_id=839033398]
 collision_mask = 4
 collide_with_areas = true
+
+[node name="InteractableComponent" type="Node2D" parent="." unique_id=288280129]
+script = ExtResource("4_0slyu")

@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://decywredh0e30" path="res://Assets/Epic RPG World - Village(interiors) V1.3/assets/animations/chests-chest1-closing.png" id="2_cjfl1"]
 [ext_resource type="Texture2D" uid="uid://clnvqb77bdvkx" path="res://Assets/Epic RPG World - Village(interiors) V1.3/assets/animations/chests-chest1-opening.png" id="3_bagqn"]
 [ext_resource type="PackedScene" uid="uid://be3ktb76ff71j" path="res://Scenes/interaction_area.tscn" id="4_pmguq"]
+[ext_resource type="Script" uid="uid://b02qesmgbm4bg" path="res://Scripts/Components/InteractableComponent.cs" id="5_dq33m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bagqn"]
 size = Vector2(32, 10.5)
@@ -155,5 +156,8 @@ animation = &"Open"
 [node name="CollisionShape2D" parent="InteractionArea" index="0" unique_id=45777686]
 position = Vector2(0, -12)
 shape = SubResource("RectangleShape2D_pmguq")
+
+[node name="InteractableComponent" type="Node2D" parent="." unique_id=1146761761]
+script = ExtResource("5_dq33m")
 
 [editable path="InteractionArea"]

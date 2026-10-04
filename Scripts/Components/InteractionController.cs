@@ -76,6 +76,13 @@ public partial class InteractionController : RayCast2D
             if (node is IInteractable interactable)
                 return interactable;
 
+            InteractableComponent component = node.GetNodeOrNull<InteractableComponent>(
+                "InteractableComponent"
+            );
+
+            if (component != null)
+                return component;
+
             node = node.GetParent();
         }
 
